@@ -1,0 +1,194 @@
+:root {
+    --red: #dc0a2d;
+    --bg: #15171e;
+    --card: #20232d;
+    --light: #2e3240;
+    --text: #f1f3f9;
+    --muted: #9aa1b5;
+    --type-color: #888;
+}
+
+/* Each type's color. Anything with data-type="fire" etc. picks it up. */
+[data-type="normal"]   { --type-color: #a8a77a; }
+[data-type="fire"]     { --type-color: #ee8130; }
+[data-type="water"]    { --type-color: #6390f0; }
+[data-type="grass"]    { --type-color: #7ac74c; }
+[data-type="electric"] { --type-color: #f7d02c; }
+[data-type="ice"]      { --type-color: #96d9d6; }
+[data-type="fighting"] { --type-color: #c22e28; }
+[data-type="poison"]   { --type-color: #a33ea1; }
+[data-type="ground"]   { --type-color: #e2bf65; }
+[data-type="flying"]   { --type-color: #a98ff3; }
+[data-type="psychic"]  { --type-color: #f95587; }
+[data-type="bug"]      { --type-color: #a6b91a; }
+[data-type="rock"]     { --type-color: #b6a136; }
+[data-type="ghost"]    { --type-color: #735797; }
+[data-type="dragon"]   { --type-color: #6f35fc; }
+[data-type="dark"]     { --type-color: #705746; }
+[data-type="steel"]    { --type-color: #b7b7ce; }
+[data-type="fairy"]    { --type-color: #d685ad; }
+
+* { box-sizing: border-box; }
+[hidden] { display: none !important; }
+
+body { margin: 0; font-family: system-ui, sans-serif; background: var(--bg); color: var(--text); }
+h1 { margin: 0; font-family: "Press Start 2P", monospace; font-size: 18px; }
+
+h3 {
+    margin: 0 0 6px;
+    font-size: 13px;
+    color: var(--muted);
+    text-transform: uppercase;
+}
+
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+
+input, select {
+    padding: 10px 12px;
+    border: 1px solid var(--light);
+    border-radius: 8px;
+    background: var(--card);
+}
+
+.btn {
+    padding: 10px 16px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--light);
+    font-weight: bold;
+}
+
+.btn-primary, .modal-catch.caught { background: var(--red); color: white; }
+
+/* Login */
+#login-screen {
+    display: grid;
+    place-items: center;
+    min-height: 100vh;
+    padding: 16px;
+}
+
+.login-card {
+    width: 100%;
+    max-width: 360px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: var(--card);
+}
+
+.login-top { padding: 32px 24px; background: var(--red); text-align: center; }
+.login-form { display: grid; gap: 12px; padding: 24px; }
+.login-form label { display: grid; gap: 6px; color: var(--muted); }
+.login-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.form-error { margin: 0; color: #ff7a8a; }
+.login-note { margin: 0; color: var(--muted); font-size: 13px; text-align: center; }
+
+/* Header + toolbar */
+.dex-header {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 16px;
+    background: var(--red);
+}
+
+.trainer { display: flex; align-items: center; gap: 12px; font-weight: bold; }
+.dex-main { max-width: 1100px; margin: 0 auto; padding: 20px 16px; }
+.toolbar { display: grid; gap: 12px; margin-bottom: 20px; }
+.progress-label { display: flex; justify-content: space-between; color: var(--muted); }
+.progress-bar { height: 10px; margin-top: 6px; border-radius: 5px; overflow: hidden; background: var(--light); }
+#progress-fill { width: 0; height: 100%; background: var(--red); transition: width 0.3s; }
+.complete #progress-fill { background: gold; }
+.controls { display: flex; flex-wrap: wrap; gap: 8px; }
+#search { flex: 1 1 200px; }
+.chip { padding: 8px 14px; border: 0; border-radius: 8px; background: var(--card); color: var(--muted); }
+.chip.active { background: var(--red); color: white; }
+.status, .empty-message, .dex-footer { padding: 32px; text-align: center; color: var(--muted); }
+.dex-footer a { color: inherit; }
+
+/* Pokémon cards */
+#pokemon-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 12px; }
+
+.card {
+    position: relative;
+    border: 2px solid transparent;
+    border-radius: 12px;
+    background: var(--card);
+}
+
+.card:hover { border-color: var(--light); }
+.card.caught { border-color: var(--red); }
+
+.card-main {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    padding: 12px;
+    border: 0;
+    background: none;
+}
+
+/* Sprite and Poké Ball stay grey until you catch it */
+.card img { image-rendering: pixelated; filter: grayscale(1); opacity: 0.5; }
+.card.caught img { filter: none; opacity: 1; }
+.card-main img { width: 96px; height: 96px; }
+.card-number { align-self: flex-start; font-size: 12px; color: var(--muted); }
+.card-name { font-weight: bold; }
+
+.catch-btn { position: absolute; top: 6px; right: 6px; padding: 0; border: 0; background: none; }
+.catch-btn img { display: block; width: 32px; height: 32px; }
+.just-caught .catch-btn { animation: wobble 0.5s; }
+@keyframes wobble { 50% { transform: rotate(-25deg) scale(1.2); } }
+
+.types { display: flex; justify-content: center; gap: 4px; }
+
+.type {
+    padding: 2px 8px;
+    border-radius: 10px;
+    background: var(--type-color);
+    color: white;
+    font-size: 12px;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+/* Details popup */
+#pokemon-modal {
+    width: min(420px, 92vw);
+    padding: 0;
+    border: 0;
+    border-radius: 16px;
+    background: var(--card);
+    color: var(--text);
+}
+
+#pokemon-modal::backdrop { background: rgba(0, 0, 0, 0.7); }
+.modal-hero { position: relative; padding: 16px; text-align: center; background: var(--type-color); }
+#modal-img { width: 180px; height: 180px; }
+.icon-btn { width: 36px; height: 36px; border: 0; border-radius: 50%; background: rgba(0, 0, 0, 0.3); color: white; }
+.modal-hero .icon-btn { position: absolute; }
+.modal-close { top: 10px; right: 10px; }
+.prev { top: 45%; left: 10px; }
+.next { top: 45%; right: 10px; }
+.modal-body { display: grid; gap: 16px; padding: 20px; }
+.modal-title { display: flex; justify-content: space-between; align-items: start; }
+.modal-title h2 { margin: 4px 0; }
+.modal-number, .modal-genus { margin: 0; color: var(--muted); }
+.modal-body .types { justify-content: start; }
+.entry { padding: 12px 16px; border-radius: 8px; background: var(--light); }
+.entry p { margin: 0; line-height: 1.5; }
+.entry .entry-source { margin-top: 6px; font-size: 13px; color: var(--muted); }
+.facts { display: flex; gap: 32px; margin: 0; }
+.facts dt { font-size: 13px; color: var(--muted); }
+.facts dd { margin: 0; font-weight: bold; }
+.stats { display: grid; gap: 6px; }
+.stat { display: grid; grid-template-columns: 40px 36px 1fr; gap: 8px; align-items: center; }
+.stat-bar { height: 6px; border-radius: 3px; overflow: hidden; background: var(--light); }
+.stat-bar span { display: block; height: 100%; background: var(--type-color); }

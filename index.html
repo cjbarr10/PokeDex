@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Pokédex</title>
+        <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="styles.css">
+        <script src="auth.js" defer></script>
+        <script src="index.js" defer></script>
+    </head>
+    <body>
+
+        <!--LOGIN SCREEN-->
+        <main id="login-screen" hidden>
+            <div class="login-card">
+                <div class="login-top">
+                    <h1>POKéDEX</h1>
+                    <p>Log in to track your collection</p>
+                </div>
+
+                <form id="login-form" class="login-form">
+                    <label>
+                        Trainer name
+                        <input id="login-name" type="text" autocomplete="username" required>
+                    </label>
+                    <label>
+                        Password
+                        <input id="login-password" type="password" autocomplete="current-password" required>
+                    </label>
+                    <p id="login-error" class="form-error" role="alert"></p>
+                    <div class="login-actions">
+                        <button type="submit" value="login" class="btn btn-primary">Log in</button>
+                        <button type="submit" value="signup" class="btn btn-secondary">New trainer</button>
+                    </div>
+                    <p class="login-note">Profiles are saved in this browser.</p>
+                </form>
+            </div>
+        </main>
+
+        <!--POKÉDEX SCREEN-->
+        <div id="dex-screen" hidden>
+            <header class="dex-header">
+                <h1>POKéDEX</h1>
+                <div class="trainer">
+                    <span id="trainer-name"></span>
+                    <button id="logout-btn" class="btn">Log out</button>
+                </div>
+            </header>
+
+            <main class="dex-main">
+                <section class="toolbar">
+                    <div id="progress-card" class="progress-card">
+                        <div class="progress-label">
+                            <span>Caught</span>
+                            <strong id="caught-count">0 / 0</strong>
+                        </div>
+                        <div class="progress-bar"><div id="progress-fill"></div></div>
+                    </div>
+
+                    <div class="controls">
+                        <input id="search" type="search" placeholder="Search by name or number" aria-label="Search Pokémon">
+                        <div class="chips" role="group" aria-label="Show">
+                            <button class="chip active" data-filter="all">All</button>
+                            <button class="chip" data-filter="caught">Caught</button>
+                            <button class="chip" data-filter="missing">Missing</button>
+                        </div>
+                        <select id="type-filter" aria-label="Filter by type">
+                            <option value="">All types</option>
+                        </select>
+                    </div>
+                </section>
+
+                <div id="status" class="status">
+                    <p id="status-text">Loading Pokédex…</p>
+                    <button id="retry-btn" class="btn btn-primary" hidden>Try again</button>
+                </div>
+                <p id="empty-message" class="empty-message" hidden>No Pokémon match your search.</p>
+
+                <div id="pokemon-grid"></div>
+            </main>
+
+            <footer class="dex-footer">Data from <a href="https://pokeapi.co" target="_blank" rel="noopener">PokéAPI</a></footer>
+        </div>
+
+        <!--POKÉMON DETAILS POPUP-->
+        <dialog id="pokemon-modal" aria-labelledby="modal-name">
+            <div class="modal-hero">
+                <button id="modal-close" class="icon-btn modal-close" aria-label="Close">✕</button>
+                <button id="modal-prev" class="icon-btn nav-btn prev" aria-label="Previous Pokémon">‹</button>
+                <img id="modal-img" alt="">
+                <button id="modal-next" class="icon-btn nav-btn next" aria-label="Next Pokémon">›</button>
+            </div>
+
+            <div class="modal-body">
+                <div class="modal-title">
+                    <div>
+                        <span id="modal-number" class="modal-number"></span>
+                        <h2 id="modal-name"></h2>
+                        <p id="modal-genus" class="modal-genus"></p>
+                    </div>
+                    <button id="modal-cry" class="icon-btn cry-btn" aria-label="Play cry" title="Play cry">
+                        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M11 5 6 9H2v6h4l5 4V5z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg>
+                    </button>
+                </div>
+
+                <div id="modal-types" class="types"></div>
+
+                <div class="entry">
+                    <h3>Pokédex entry</h3>
+                    <p id="modal-description"></p>
+                    <p id="modal-source" class="entry-source"></p>
+                </div>
+
+                <dl class="facts">
+                    <div><dt>Height</dt><dd id="modal-height">–</dd></div>
+                    <div><dt>Weight</dt><dd id="modal-weight">–</dd></div>
+                </dl>
+
+                <div>
+                    <h3>Base stats</h3>
+                    <div id="modal-stats" class="stats"></div>
+                </div>
+
+                <button id="modal-catch" class="btn modal-catch">
+                    <span id="modal-catch-label">Mark as caught</span>
+                </button>
+            </div>
+        </dialog>
+
+    </body>
+</html>
