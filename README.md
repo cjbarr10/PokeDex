@@ -12,3 +12,4 @@ Open `index.html` in your browser. That's it, no installs needed.
 - **`index.js`**: loads all 151 Pokémon from PokéAPI in 19 requests (names + one per type), caches them, and builds the grid. Descriptions and stats load only when you open a Pokémon.
 - **`styles.css`**: the layout and styling.
 # PokeDex
+# PokeDex
